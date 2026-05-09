@@ -141,7 +141,7 @@ Tienz-Portfolio/
 
 Gõ liên tiếp các chữ cái (không cần ô input) để tạo thành từ khóa:
 - **love**
-- **chi**
+- **truc**
 - **yeu**
 
 Khi đó tiêu đề sẽ biến thành một thông điệp đặc biệt 💖
