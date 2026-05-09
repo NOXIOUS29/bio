@@ -56,7 +56,7 @@ Chào mừng đến với **trang portfolio cá nhân** của tôi – phiên b�
 - Tích hợp nhạc nền, có nút bật/tắt và thanh kéo âm lượng.
 
 ### 🥚 Easter Egg
-- Gõ các từ khóa bí mật như `love`, `chi`, `yeu` để mở khóa bất ngờ trên tiêu đề.
+- Gõ các từ khóa bí mật như `love`, `truc`, `yeu` để mở khóa bất ngờ trên tiêu đề.
 
 ---
 
@@ -95,7 +95,7 @@ Chào mừng đến với **trang portfolio cá nhân** của tôi – phiên b�
 - Tích hợp nhạc nền, có nút bật/tắt và thanh kéo âm lượng.
 
 ### 🥚 Easter Egg
-- Gõ các từ khóa bí mật như `love`, `chi`, `yeu` để mở khóa bất ngờ trên tiêu đề.
+- Gõ các từ khóa bí mật như `love`, `truc`, `yeu` để mở khóa bất ngờ trên tiêu đề.
 
 ---
 
