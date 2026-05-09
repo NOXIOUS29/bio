@@ -1,4 +1,3 @@
-```markdown
 <div align="center">
 
   <!-- Hiệu ứng gõ tên -->
@@ -16,7 +15,7 @@
   <br/>
   <br/>
 
-  <!-- Badge công nghệ / trạng thái -->
+  <!-- Badge trạng thái -->
   <img src="https://img.shields.io/badge/Version-3D%20Cyberpunk%20Edition-ff00ff?style=for-the-badge&logo=html5&logoColor=white" alt="Version 3D Cyberpunk" />
   <img src="https://img.shields.io/badge/Themes-Light%20%7C%20Dark%20%7C%20Cyberpunk-6c5ce7?style=for-the-badge&logo=html5&logoColor=white" alt="Themes" />
   <img src="https://img.shields.io/badge/Effects-3D%20Tilt%20%7C%20Particles%20%7C%20Custom%20Cursor-00ffff?style=for-the-badge&logo=javascript&logoColor=black" alt="Effects" />
@@ -29,15 +28,52 @@
 
 > **"Yêu là chết ở trong lòng một ít, vì mấy khi yêu mà chắc được yêu."** – Xuân Diệu
 
-Chào mừng bạn đến với **trang portfolio cá nhân** của tôi – phiên bản nâng cấp mang đậm phong cách **Retro Pixel kết hợp hiệu ứng 3D ảo diệu**.  
-Đây không chỉ là một trang web tĩnh, mà còn chứa đựng **cá tính, sở thích, dự án** và cả những **trích dẫn nổi tiếng** về cuộc sống, tình yêu từ khắp nơi trên thế giới.
+Chào mừng đến với **trang portfolio cá nhân** của tôi – phiên bản mang đậm phong cách **Retro Pixel kết hợp hiệu ứng 3D ảo diệu**.  
+Đây không chỉ là một trang web tĩnh, mà còn chứa đựng **cá tính, sở thích, dự án** và những **trích dẫn nổi tiếng** về cuộc sống, tình yêu từ khắp nơi trên thế giới.
 
 ---
 
 ## ✨ Tính năng nổi bật
 
 ### 🎨 3 chủ đề giao diện
-- **Light** – Phong cách cổ điển, giấy kẻ ô vuông.
+- **Light** – Phong cách cổ điển, giấy kẻ ô vuông
+- **Dark** – Huyền ảo, neon tím thanh lịch
+- **Cyberpunk** – Đậm chất cyber với hồng/tím và glow rực rỡ
+
+### 🖱️ Con trỏ tùy chỉnh & trail
+- Chuột tạo vệt sáng và hiệu ứng phóng to khi hover vào phần tử tương tác.
+
+### 🌀 Hiệu ứng 3D Tilt
+- Các khối thông tin nghiêng theo hướng chuột, tạo cảm giác không gian ba chiều.
+
+### ✨ Hạt Particle bay kết nối
+- Hệ thống hạt nổi 3D với đường nối, chuyển màu theo từng theme.
+
+### 💬 Trích dẫn đa văn hóa
+- Bộ sưu tập **15+ câu trích dẫn** từ các danh nhân, nhà thơ, triết gia Việt Nam và quốc tế, xoay vòng liên tục.
+
+### 🎵 Music Player
+- Tích hợp nhạc nền, có nút bật/tắt và thanh kéo âm lượng.
+
+### 🥚 Easter Egg
+- Gõ các từ khóa bí mật như `love`, `chi`, `yeu` để mở khóa bất ngờ trên tiêu đề.
+
+---
+
+## 🧩 Công nghệ sử dụng
+
+| Công nghệ | Mô tả |
+|-----------|-------|
+| **HTML5** | Cấu trúc ngữ nghĩa, tối ưu SEO |
+| **CSS3** | Biến CSS custom, Grid, Flexbox, animation, transform 3D |
+| **JavaScript (Vanilla)** | Toàn bộ logic: clock, theme switcher, tilt, particles, quotes, easter egg |
+| **Canvas API** | Vẽ particle 3D và đường nối |
+| **Font Awesome** | Icon mạng xã hội & music |
+| **Google Fonts** | Press Start 2P, VT323, Dancing Script |
+
+---
+
+## 📁 Cấu trúc dự án
 - **Dark** – Huyền ảo, neon tím thanh lịch.
 - **Cyberpunk** – Đậm chất cyber với hồng/tím và glow rực rỡ.
 
