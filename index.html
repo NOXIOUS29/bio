@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienz 🤡 - Portfolio 3D</title>
+
+    <!-- Fonts: Retro Pixel + Monospace + Cursive cho quote -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Roboto+Mono:wght@400;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==================== BIẾN THEME ==================== */
+        :root {
+            --bg: #e6e6e6;
+            --card-bg: #f2f2f2;
+            --text: #111827;
+            --border: #111827;
+            --gray: #6b7280;
+            --grid: #cfd2d6;
+            --accent: #6c5ce7;
+            --accent2: #a29bfe;
+            --glow: rgba(108, 92, 231, 0.5);
+            --shadow: 6px 6px 0 rgba(0,0,0,0.15);
+            --skill-bg: #e0e0e0;
+            --skill-fill: #111827;
+            --tag-bg: #e0e0e0;
+            --tag-hover-bg: #111827;
+            --tag-hover-text: white;
+            --music-btn-bg: #e0e0e0;
+            --music-play-bg: #111827;
+            --music-play-color: white;
+            --social-bg: #e0e0e0;
+            --social-color: #111827;
+            --cursor-color: #6c5ce7;
+            --particle-color: 108, 92, 231;
+            --scanline-opacity: 0.03;
+            --name-glow: none;
+            --header-gradient: none;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1a1a2e;
+            --card-bg: #25253a;
+            --text: #e0e0ff;
+            --border: #6c5ce7;
+            --gray: #4a4a6a;
+            --grid: #2a2a4a;
+            --accent: #a29bfe;
+            --accent2: #6c5ce7;
+            --glow: rgba(162, 155, 254, 0.6);
+            --shadow: 6px 6px 0 rgba(108, 92, 231, 0.3);
+            --skill-bg: #1a1a3a;
+            --skill-fill: #a29bfe;
+            --tag-bg: #1a1a3a;
+            --tag-hover-bg: #a29bfe;
+            --tag-hover-text: #0a0a1a;
+            --music-btn-bg: #1a1a3a;
+            --music-play-bg: #a29bfe;
+            --music-play-color: #0a0a1a;
+            --social-bg: #1a1a3a;
+            --social-color: #e0e0ff;
+            --cursor-color: #a29bfe;
+            --particle-color: 162, 155, 254;
+            --scanline-opacity: 0.05;
+        }
+
+        [data-theme="cyberpunk"] {
+            --bg: #0d0221;
+            --card-bg: #150535;
+            --text: #00ffff;
+            --border: #ff00ff;
+            --gray: #ff00ff80;
+            --grid: #ff00ff22;
+            --accent: #ff00ff;
+            --accent2: #00ffff;
+            --glow: rgba(255, 0, 255, 0.8);
+            --shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+            --skill-bg: #1a0033;
+            --skill-fill: linear-gradient(90deg, #ff00ff, #00ffff);
+            --tag-bg: #1a0033;
+            --tag-hover-bg: #ff00ff;
+            --tag-hover-text: #0d0221;
+            --music-btn-bg: #1a0033;
+            --music-play-bg: #ff00ff;
+            --music-play-color: #0d0221;
+            --social-bg: #1a0033;
+            --social-color: #00ffff;
+            --cursor-color: #ff00ff;
+            --particle-color: 255, 0, 255;
+            --scanline-opacity: 0.08;
+            --name-glow: 0 0 15px #ff00ff, 0 0 30px #00ffff;
+            --header-gradient: linear-gradient(45deg, #ff00ff, #00ffff);
+        }
+
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 20px 20px;
+            cursor: none;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            perspective: 1200px;
+        }
+
+        /* Scanline toàn trang */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0,0,0,0.03) 0px,
+                    rgba(0,0,0,0.03) 1px,
+                    transparent 1px,
+                    transparent 2px);
+            pointer-events: none;
+            z-index: 999;
+            opacity: var(--scanline-opacity);
+        }
+
+        /* ==================== CUSTOM CURSOR ==================== */
+        .cursor {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--cursor-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cursor-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+        }
+        .cursor-trail {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--cursor-color);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: 9999;
+            animation: trail-fade 0.6s ease-out forwards;
+        }
+        @keyframes trail-fade {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.2); }
+        }
+
+        /* ==================== PARTICLES CANVAS ==================== */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ==================== CONTAINER CHÍNH ==================== */
+        .os-window {
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            border: 4px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+        }
+
+        /* ==================== HEADER ==================== */
+        .window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .exe-title {
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: var(--header-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: var(--name-glow);
+            transition: all 0.5s ease;
+        }
+        #clock {
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--text);
+        }
+
+        /* ==================== THEME TOGGLE NÂNG CAO ==================== */
+        .theme-switcher {
+            display: flex;
+            gap: 8px;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+        }
+        .theme-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--social-bg);
+            color: var(--social-color);
+        }
+        .theme-btn:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--glow);
+        }
+        .theme-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* ==================== GRID 3D ==================== */
+        .grid-3d {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            transform-style: preserve-3d;
+        }
+
+        /* ==================== LEFT COLUMN ==================== */
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Avatar với tilt */
+        .avatar-wrapper {
+            perspective: 800px;
+            display: flex;
+            justify-content: center;
+        }
+        .avatar-3d {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border: 4px solid var(--border);
+            image-rendering: pixelated;
+            filter: grayscale(10%) contrast(105%);
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        .name-box {
+            font-family: 'VT323', monospace;
+            font-size: 28px;
+            letter-spacing: 3px;
+            background: var(--tag-bg);
+            border: 3px solid var(--border);
+            box-shadow: 4px 4px 0 var(--gray);
+            padding: 8px 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .name-box:hover {
+            animation: glitch 0.3s ease;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+            60% { transform: translate(-3px, -3px); }
+            80% { transform: translate(3px, 3px); }
+            100% { transform: translate(0); }
+        }
+
+        .pixel-card {
+            background: var(--card-bg);
+            border: 3px solid var(--border);
+            box-shadow: 4px 4px 0 var(--gray);
+            padding: 14px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .pixel-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0 var(--gray);
+        }
+
+        .stat-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .stat-label {
+            color: var(--gray);
+        }
+        .status-online {
+            color: #00ff00;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .mood-text {
+            transition: opacity 0.3s ease;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+        .social-link {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border);
+            background: var(--social-bg);
+            color: var(--social-color);
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            text-decoration: none;
+        }
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        .social-link.discord:hover { background: #5865F2; color: white; }
+        .social-link.github:hover { background: #333; color: white; }
+        .social-link.facebook:hover { background: #1877F2; color: white; }
+        .social-link.tiktok:hover { background: #000; color: #ff0050; }
+        .social-link.youtube:hover { background: #FF0000; color: white; }
+
+        /* Music Player */
+        .music-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .music-btn {
+            width: 38px;
+            height: 38px;
+            border: 2px solid var(--border);
+            background: var(--music-btn-bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .music-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 3px 3px 0 var(--gray);
+        }
+        .music-btn.play {
+            width: 46px;
+            height: 46px;
+            background: var(--music-play-bg);
+            color: var(--music-play-color);
+        }
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            accent-color: var(--accent);
+        }
+
+        /* ==================== RIGHT COLUMN ==================== */
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tag {
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            padding: 6px 12px;
+            background: var(--tag-bg);
+            border: 2px solid var(--border);
+            box-shadow: 2px 2px 0 var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .tag:hover {
+            background: var(--tag-hover-bg);
+            color: var(--tag-hover-text);
+            transform: translate(-3px, -3px);
+            box-shadow: 5px 5px 0 var(--gray);
+        }
+
+        .skill-bar {
+            height: 12px;
+            border: 2px solid var(--border);
+            background: var(--skill-bg);
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            background: var(--skill-fill);
+            transition: width 1.5s ease-out;
+        }
+
+        /* Quote Card */
+        .quote-card {
+            background: var(--card-bg);
+            border: 3px solid var(--border);
+            box-shadow: 4px 4px 0 var(--gray);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        .quote-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 10px;
+            transition: opacity 0.5s ease;
+        }
+        .quote-author {
+            color: var(--accent);
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Projects */
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: var(--tag-bg);
+            border: 2px solid var(--border);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .project-item:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+        }
+        .status-active { color: #00ff00; border-color: #00ff00; }
+        .status-wip { color: #ffaa00; border-color: #ffaa00; }
+        .status-done { color: var(--accent); border-color: var(--accent); }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--border);
+            font-size: 14px;
+        }
+        .heart-beat {
+            display: inline-block;
+            animation: heartbeat 1s infinite;
+            color: #ff6b6b;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .grid-3d {
+                grid-template-columns: 1fr;
+            }
+            .theme-switcher {
+                top: 5px;
+                right: 5px;
+                gap: 4px;
+            }
+            body {
+                cursor: auto;
+            }
+            .cursor, .cursor-dot, .cursor-trail {
+                display: none;
+            }
+            .window-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ==================== 3D TILT GLOBAL ==================== */
+        .tilt-element {
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas hạt nổi 3D -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Con trỏ custom -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn active" data-theme="light" title="Light Mode"><i class="fas fa-sun"></i></button>
+        <button class="theme-btn" data-theme="dark" title="Dark Mode"><i class="fas fa-moon"></i></button>
+        <button class="theme-btn" data-theme="cyberpunk" title="Cyberpunk Mode"><i class="fas fa-skull"></i></button>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bgm" src="123.mp3" preload="auto" loop></audio>
+
+    <!-- Cửa sổ chính -->
+    <div class="os-window" id="mainWindow">
+        <div class="window-header">
+            <span class="exe-title" id="headerTitle">❤ Tôi Yêu Em !</span>
+            <span id="clock" class="exe-title">00:00:00</span>
+        </div>
+
+        <div class="grid-3d">
+            <!-- LEFT -->
+            <div class="left-col">
+                <div class="avatar-wrapper tilt-element" data-tilt>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStaWNbEAF9exMotFR8YA9R3ObmgHZzi63AvymbFv4mRA&s=10"
+                        class="avatar-3d" alt="Avatar" id="avatarImg" />
+                </div>
+                <div class="name-box tilt-element" data-tilt>Tienz</div>
+
+                <div class="pixel-card tilt-element" data-tilt>
+                    <h2 class="exe-title" style="font-size:20px;">STATS</h2>
+                    <div class="stat-item"><span class="stat-label">Tuổi:</span> <strong>17</strong></div>
+                    <div class="stat-item"><span class="stat-label">Status:</span> <span class="status-online">Online</span></div>
+                    <div class="stat-item"><span class="stat-label">From:</span> Việt Nam 🇻🇳</div>
+                    <div class="stat-item"><span class="stat-label">Mood:</span> <span class="mood-text" id="moodDisplay">Coding... 💻</span></div>
+                </div>
+
+                <div class="pixel-card tilt-element" data-tilt>
+                    <h2 class="exe-title" style="font-size:20px;">SOCIAL</h2>
+                    <div class="social-links">
+                        <a href="https://discord.com/channels/@me/1145059102993698850" class="social-link discord" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="https://github.com/truongtiengamingtv-hue" class="social-link github" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/share/18Q1C3NzKR/" class="social-link facebook" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.tiktok.com/@truongtien2929" class="social-link tiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@tientruong-r1y" class="social-link youtube" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="pixel-card tilt-element" data-tilt>
+                    <h2 class="exe-title" style="font-size:20px;"><i class="fas fa-music"></i> BGM</h2>
+                    <div class="music-control">
+                        <button id="muteBtn" class="music-btn" title="Mute/Unmute"><i class="fas fa-volume-up" id="volumeIcon"></i></button>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="right-col">
+                <div class="pixel-card tilt-element" data-tilt>
+                    <h2 class="exe-title" style="font-size:20px;">SỞ THÍCH</h2>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <span class="tag">MUSIC</span><span class="tag">GAME</span><span class="tag">CODE</span>
+                        <span class="tag">AI</span><span class="tag">ANIME</span>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 2fr; gap:15px;" class="tilt-element" data-tilt>
+                    <div class="pixel-card">
+                        <h2 class="exe-title" style="font-size:18px;">YÊU THÍCH</h2>
+                        <p style="font-size:13px;">AI</p>
+                        <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+                        <p style="font-size:13px;">Antigravity</p>
+                        <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+                        <p style="font-size:13px;">Gaming</p>
+                        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="pixel-card">
+                        <h2 class="exe-title" style="font-size:18px;">KỸ NĂNG</h2>
+                        <div style="margin-bottom:8px;"><span style="font-size:13px;">Music – 100%</span><div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div></div>
+                        <div style="margin-bottom:8px;"><span style="font-size:13px;">Hack Game – 75%</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+                        <div style="margin-bottom:8px;"><span style="font-size:13px;">Used AI – 80%</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+                        <div><span style="font-size:13px;">Code – 1%</span><div class="skill-bar"><div class="skill-fill" style="width:1%"></div></div></div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <div class="quote-card tilt-element" data-tilt>
+                        <h2 class="exe-title" style="font-size:18px;"><i class="fas fa-quote-left"></i> QUOTE</h2>
+                        <p class="quote-text" id="quoteText">"Yêu là chết ở trong lòng một ít..."</p>
+                        <p class="quote-author" id="quoteAuthor">- Xuân Diệu</p>
+                    </div>
+                    <div class="pixel-card tilt-element" data-tilt>
+                        <h2 class="exe-title" style="font-size:18px;"><i class="fas fa-code"></i> PROJECTS</h2>
+                        <div class="project-item">
+                            <i class="fas fa-robot"></i>
+                            <div style="flex:1;"><strong>AI Bot</strong><br><small>Discord Bot with AI</small></div>
+                            <span class="status-active" style="padding:2px 6px;border:1px solid;">Active</span>
+                        </div>
+                        <div class="project-item">
+                            <i class="fas fa-gamepad"></i>
+                            <div style="flex:1;"><strong>Game Hack</strong><br><small>Memory Manipulation</small></div>
+                            <span class="status-wip" style="padding:2px 6px;border:1px solid;">WIP</span>
+                        </div>
+                        <div class="project-item">
+                            <i class="fas fa-globe"></i>
+                            <div style="flex:1;"><strong>Portfolio</strong><br><small>This website!</small></div>
+                            <span class="status-done" style="padding:2px 6px;border:1px solid;">Done</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with <span class="heart-beat">❤</span> by Tienz | © 2026</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== CLOCK ====================
+            function updateClock() {
+                const now = new Date();
+                document.getElementById("clock").textContent =
+                    now.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // ==================== THEME SWITCHER ====================
+            const themeBtns = document.querySelectorAll('.theme-btn');
+            const html = document.documentElement;
+
+            function setTheme(theme) {
+                html.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeBtns.forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`.theme-btn[data-theme="${theme}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            // Load theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            themeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTheme(btn.dataset.theme);
+                });
+            });
+
+            // ==================== CUSTOM CURSOR ====================
+            const cursor = document.getElementById('cursor');
+            const cursorDot = document.getElementById('cursorDot');
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorDot.style.left = (mouseX - 4) + 'px';
+                cursorDot.style.top = (mouseY - 4) + 'px';
+                // Trail
+                createTrail(mouseX, mouseY);
+            });
+
+            function animateCursor() {
+                cursorX += (mouseX - cursorX) * 0.15;
+                cursorY += (mouseY - cursorY) * 0.15;
+                cursor.style.left = (cursorX - 12) + 'px';
+                cursor.style.top = (cursorY - 12) + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            let trailCount = 0;
+            function createTrail(x, y) {
+                if (trailCount > 4) return;
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = (x - 5) + 'px';
+                trail.style.top = (y - 5) + 'px';
+                document.body.appendChild(trail);
+                trailCount++;
+                setTimeout(() => {
+                    trail.remove();
+                    trailCount--;
+                }, 600);
+            }
+
+            // Hover effect
+            document.querySelectorAll('a, button, .tag, input, .social-link, .music-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(1.6)';
+                    cursor.style.backgroundColor = 'rgba(108,92,231,0.2)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.backgroundColor = 'transparent';
+                });
+            });
+
+            // ==================== 3D TILT EFFECT ====================
+            document.querySelectorAll('.tilt-element').forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 8;
+                    const rotateY = (centerX - x) / 8;
+                    el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                });
+            });
+
+            // Đặc biệt avatar 3D mạnh hơn
+            const avatarImg = document.getElementById('avatarImg');
+            if (avatarImg) {
+                avatarImg.addEventListener('mousemove', (e) => {
+                    const rect = avatarImg.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const rotateX = (y - rect.height/2) / 4;
+                    const rotateY = (rect.width/2 - x) / 4;
+                    avatarImg.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+                });
+                avatarImg.addEventListener('mouseleave', () => {
+                    avatarImg.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1)';
+                });
+            }
+
+            // ==================== PARTICLES CANVAS 3D ====================
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 70;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.z = Math.random() * 500;
+                    this.size = Math.random() * 4 + 1;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = (Math.random() - 0.5) * 0.4;
+                    this.speedZ = (Math.random() - 0.5) * 0.3;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.z += this.speedZ;
+                    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height || this.z < -200 || this.z > 700) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    const factor = (this.z + 200) / 900;
+                    const size = this.size * (1 - factor * 0.5);
+                    const opacity = 0.3 + factor * 0.7;
+                    const theme = html.getAttribute('data-theme') || 'light';
+                    let color;
+                    if (theme === 'cyberpunk') color = `rgba(255,0,255,${opacity})`;
+                    else if (theme === 'dark') color = `rgba(162,155,254,${opacity})`;
+                    else color = `rgba(108,92,231,${opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+                    ctx.fillStyle = color;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                // Connect lines
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            const opacity = (1 - dist / 100) * 0.2;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(108,92,231,${opacity})`;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // ==================== AUDIO ====================
+            const audio = document.getElementById("bgm");
+            let played = false;
+            function playMusic() {
+                if (played) return;
+                audio.play().then(() => {
+                    played = true;
+                    document.removeEventListener("click", playMusic);
+                    document.removeEventListener("touchstart", playMusic);
+                }).catch(() => {});
+            }
+            document.addEventListener("click", playMusic);
+            document.addEventListener("touchstart", playMusic);
+
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeIcon = document.getElementById('volumeIcon');
+            let lastVolume = 50;
+            audio.volume = 0.5;
+
+            volumeSlider.addEventListener('input', (e) => {
+                const vol = e.target.value / 100;
+                audio.volume = vol;
+                updateVolIcon(vol);
+                if (vol > 0) lastVolume = e.target.value;
+            });
+
+            document.getElementById('muteBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (audio.volume > 0) {
+                    lastVolume = volumeSlider.value;
+                    audio.volume = 0;
+                    volumeSlider.value = 0;
+                    updateVolIcon(0);
+                } else {
+                    audio.volume = lastVolume / 100;
+                    volumeSlider.value = lastVolume;
+                    updateVolIcon(audio.volume);
+                }
+            });
+
+            function updateVolIcon(vol) {
+                if (vol === 0) volumeIcon.className = 'fas fa-volume-mute';
+                else if (vol < 0.5) volumeIcon.className = 'fas fa-volume-down';
+                else volumeIcon.className = 'fas fa-volume-up';
+            }
+
+            // ==================== MOOD ROTATION ====================
+            const moods = ['Coding... 💻', 'Gaming... 🎮', 'Listening to music... 🎧', 'Chilling... 😎', 'Learning AI... 🤖'];
+            let moodIdx = 0;
+            const moodDisplay = document.getElementById('moodDisplay');
+            setInterval(() => {
+                moodIdx = (moodIdx + 1) % moods.length;
+                moodDisplay.style.opacity = 0;
+                setTimeout(() => {
+                    moodDisplay.textContent = moods[moodIdx];
+                    moodDisplay.style.opacity = 1;
+                }, 300);
+            }, 5000);
+
+            // ==================== QUOTES NÂNG CAO (đa dạng văn hóa, chủ đề) ====================
+            const quotes = [
+                { text: '"Yêu là chết ở trong lòng một ít, vì mấy khi yêu mà chắc được yêu."', author: 'Xuân Diệu' },
+                { text: '"Sống là cho, đâu chỉ nhận riêng mình."', author: 'Tố Hữu' },
+                { text: '"Hãy hướng về phía mặt trời, bóng tối sẽ ngả về sau bạn."', author: 'Heli (Tục ngữ)' },
+                { text: '"Đừng sống cùng một năm đến 75 lần và gọi đó là cuộc đời."', author: 'Robin Sharma' },
+                { text: '"The only way to do great work is to love what you do."', author: 'Steve Jobs' },
+                { text: '"Học, học nữa, học mãi."', author: 'V.I. Lenin' },
+                { text: '"Tình yêu là điều kiện để tri thức được bắt đầu."', author: 'Leonardo da Vinci' },
+                { text: '"Be the change that you wish to see in the world."', author: 'Mahatma Gandhi' },
+                { text: '"Cái tôi và sự hiểu biết tỷ lệ nghịch với nhau."', author: 'Albert Einstein' },
+                { text: '"Đời phải trải qua giông tố nhưng không được cúi đầu trước giông tố."', author: 'Đặng Thùy Trâm' },
+                { text: '"Imagination is more important than knowledge."', author: 'Albert Einstein' },
+                { text: '"Yêu tôi hay ghét tôi, cả hai đều có lợi cho tôi."', author: 'Baland Quandeel' },
+                { text: '"Code is like humor. When you have to explain it, it\'s bad."', author: 'Cory House' },
+                { text: '"Nếu bạn muốn đi nhanh, hãy đi một mình. Nếu bạn muốn đi xa, hãy đi cùng nhau."', author: 'Tục ngữ châu Phi' },
+                { text: '"Happiness is not something ready made. It comes from your own actions."', author: 'Dalai Lama' },
+            ];
+            let quoteIdx = 0;
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+
+            function rotateQuote() {
+                quoteText.style.opacity = 0;
+                quoteAuthor.style.opacity = 0;
+                setTimeout(() => {
+                    quoteIdx = (quoteIdx + 1) % quotes.length;
+                    quoteText.textContent = quotes[quoteIdx].text;
+                    quoteAuthor.textContent = '- ' + quotes[quoteIdx].author;
+                    quoteText.style.opacity = 1;
+                    quoteAuthor.style.opacity = 1;
+                }, 500);
+            }
+            setInterval(rotateQuote, 8000);
+
+            // ==================== EASTER EGG: GÕ CHỮ ====================
+            const headerTitle = document.getElementById('headerTitle');
+            const secretCodes = ['love', 'truc', 'yeu'];
+            let inputBuffer = '';
+            let activated = false;
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
+                    inputBuffer += e.key.toLowerCase();
+                    if (inputBuffer.length > 10) inputBuffer = inputBuffer.slice(-10);
+                    for (const code of secretCodes) {
+                        if (inputBuffer.includes(code) && !activated) {
+                            activated = true;
+                            headerTitle.textContent = '❤ Tôi Yêu Em, Truc à ! ❤';
+                            headerTitle.style.color = '#ff6b9d';
+                            headerTitle.style.textShadow = '0 0 15px #ff6b9d, 0 0 30px #ff1493';
+                            headerTitle.style.webkitTextFillColor = '#ff6b9d';
+                            headerTitle.style.background = 'none';
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // ==== Log console ====
+            console.log('%c🦆 Tienz 3D Portfolio Loaded!', 'color: #a29bfe; font-size: 20px; font-weight: bold;');
+            console.log('%c💡 Gõ "love", "truc", hoặc "yeu" để mở khóa bí mật...', 'color: #aaa;');
+        })();
+    </script>
+</body>
+</html>
